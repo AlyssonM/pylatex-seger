@@ -1,0 +1,7 @@
+services:
+  relatorio_api:
+    build: ./app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./templates:/app/templates

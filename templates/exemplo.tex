@@ -1,0 +1,45 @@
+\documentclass[
+    12pt,
+    openright,
+    oneside,
+    a4paper,
+    chapter=TITLE,
+    section=TITLE,
+    sumario=tradicional
+]{abntex2}
+
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+
+\titulo{Relatório Técnico Automatizado}
+\autor{Gerado via PyLaTeX com abnTeX2}
+\local{Brasil}
+\data{\today}
+
+\begin{document}
+
+\imprimircapa
+\imprimirfolhaderosto
+
+\tableofcontents
+\newpage
+
+\chapter{Introdução}
+
+Este relatório foi gerado automaticamente pelo sistema utilizando o pacote abnTeX2.
+
+\chapter{Dados Recebidos}
+
+Os dados fornecidos pelo usuário são:
+
+\begin{itemize}
+    \item Nome: \textbf{ {{ nome }} }
+    \item Data: \textbf{ {{ data }} }
+    \item Informação: \textbf{ {{ informacao }} }
+\end{itemize}
+
+\chapter{Conclusão}
+
+Este relatório cumpre as normas técnicas definidas pela ABNT graças ao uso do abnTeX2.
+
+\end{document}
