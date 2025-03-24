@@ -3,5 +3,10 @@ services:
     build: ./app
     ports:
       - "8000:8000"
+    mem_limit: 512m        # Limita o uso de memória para 512 MB
+    cpus: 0.5              # Limita a 50% de 1 CPU
+    restart: always
     volumes:
       - ./templates:/app/templates
+    env_file:
+      - .env

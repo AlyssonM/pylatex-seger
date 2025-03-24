@@ -1,8 +1,17 @@
-from fastapi import FastAPI, Response, HTTPException, Request
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from fastapi import FastAPI, Response, HTTPException, Request, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from jinja2 import Environment, FileSystemLoader
+
 import subprocess
+from dotenv import load_dotenv
+load_dotenv()
 import os
+
+API_KEY = os.getenv("API_KEY")
+API_KEY_NAME = "X-API-KEY"
 
 app = FastAPI()
 origins = [
@@ -77,7 +86,6 @@ class LinhaResumo(BaseModel):
     atual: str
     proposto: str
 
-
 class DadosRelatorio(BaseModel):
     Unidade: str
     Autores: str
@@ -115,9 +123,19 @@ class DadosRelatorio(BaseModel):
     tabela_12meses_otimizados: Optional[List[LinhaOtimizacao12Meses]] = [] 
     tabela_contrato_comparado: Optional[List[LinhaContratoComparado]] = []
     resumo_proposta: Optional[List[LinhaResumo]] = []
-    
+
+async def validar_api_key(x_api_key: str = Header(...)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="API Key inválida")
+
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 @app.post("/gerar-relatorio")
-async def gerar_relatorio(dados: DadosRelatorio):
+@limiter.limit("5/minute")  # máximo 5 requisições por minuto por IP
+async def gerar_relatorio(request: Request, dados: DadosRelatorio, _: str = Depends(validar_api_key)):
     template = env.get_template('exemplo.tex')
     tex_renderizado = template.render(**dados.dict())
 
@@ -128,8 +146,8 @@ async def gerar_relatorio(dados: DadosRelatorio):
         tex_file.write(tex_renderizado)
 
     try:
-        subprocess.run(["pdflatex", "-output-directory=/tmp", tex_path], check=True)
-        subprocess.run(["pdflatex", "-output-directory=/tmp", tex_path], check=True) # executado duas vezes para TOC
+        subprocess.run(["pdflatex", "-interaction=nonstopmode", "-no-shell-escape", "-output-directory=/tmp", tex_path], check=True)
+        subprocess.run(["pdflatex", "-interaction=nonstopmode", "-no-shell-escape", "-output-directory=/tmp", tex_path], check=True) # executado duas vezes para TOC
     except subprocess.CalledProcessError as e:
         raise HTTPException(status_code=500, detail="Erro ao compilar o LaTeX.")
 
@@ -142,5 +160,8 @@ async def gerar_relatorio(dados: DadosRelatorio):
             os.remove(f"/tmp/relatorio{ext}")
         except FileNotFoundError:
             pass
+
+    if not pdf_bytes.startswith(b'%PDF'):
+        raise HTTPException(500, detail="Arquivo gerado não é um PDF válido.")
 
     return Response(content=pdf_bytes, media_type="application/pdf")

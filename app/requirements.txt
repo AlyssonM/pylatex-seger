@@ -2,3 +2,5 @@ fastapi
 uvicorn
 pylatex
 jinja2
+slowapi
+python-dotenv

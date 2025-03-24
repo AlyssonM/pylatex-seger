@@ -3,6 +3,11 @@ import requests
 # URL do microserviço
 url = "https://8000-idx-pylatex-seger-1742562415094.cluster-kc2r6y3mtba5mswcmol45orivs.cloudworkstations.dev/gerar-relatorio"
 
+headers = {
+    "Content-Type": "application/json",
+    "X-API-KEY": "chave-secreta-supersegura"
+}
+
 # Dados diretamente embutidos (exemplo simplificado com apenas alguns campos)
 dados = {
     "Unidade": "KFC Technologies",
@@ -301,7 +306,7 @@ dados = {
 }
 
 # Envia a requisição POST com os dados JSON
-response = requests.post(url, json=dados)
+response = requests.post(url, json=dados, headers=headers)
 
 # Verifica se a resposta foi bem-sucedida
 if response.status_code == 200:
