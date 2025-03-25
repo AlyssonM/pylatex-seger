@@ -6,7 +6,7 @@ url = "https://8000-idx-pylatex-seger-1742562415094.cluster-kc2r6y3mtba5mswcmol4
 headers = {
     "Content-Type": "application/json",
     "X-API-KEY": "chave-secreta-supersegura"
-}
+}	
 
 # Dados diretamente embutidos (exemplo simplificado com apenas alguns campos)
 dados = {
