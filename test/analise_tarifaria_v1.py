@@ -155,8 +155,8 @@ def calcular_custo_tarifa_bt(media_imp=True):
         total += subtotal + pis + cofins + icms
 
     return total
-custo_bt = calcular_custo_tarifa_bt(media_imp=True)
 
+custo_bt = calcular_custo_tarifa_bt(media_imp=True)
 # total_verde = calcular_custo_tarifa_verde(43,True)
 # print(total_verde)
 # total_azul = calcular_custo_tarifa_azul([30, 43],True)
@@ -222,6 +222,7 @@ plt.tight_layout()
 plt.savefig("otimizacao_tarifa_azul_3d.png")
 plt.close()
 
+# Gráfico de contorno
 plt.figure(figsize=(10, 6))
 cp = plt.contourf(X, Y, Z, cmap='plasma', levels=30)
 plt.colorbar(cp, label='Custo Anual (R$)')
@@ -235,7 +236,7 @@ plt.plot(demanda_p_otima, demanda_fp_otima, 'ro', label='Ótimo')
 # Texto com coordenadas (em branco)
 plt.text(demanda_p_otima + 0.5, demanda_fp_otima + 0.5,
          f'({demanda_p_otima}, {demanda_fp_otima})',
-         color='white', fontsize=10, weight='bold')
+         color='white', fontsize=12, weight='bold')
 
 plt.legend()
 plt.grid(True)
