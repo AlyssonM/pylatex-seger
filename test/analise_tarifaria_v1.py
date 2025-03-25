@@ -3,6 +3,7 @@ import numpy as np
 from scipy.optimize import minimize_scalar, minimize
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+from mpl_toolkits.mplot3d import Axes3D
 
 # Dados de consumo mensal
 dados_mensais = [
@@ -184,6 +185,62 @@ plt.tight_layout()
 # Salva como PNG
 output_path = "./custo_modalidade_tarifaria.png"
 plt.savefig(output_path)
+plt.close()
+
+demanda_range = np.linspace(20, 60, 100)
+custos_verde = [calcular_custo_tarifa_verde(d, media_imp=True) for d in demanda_range]
+plt.figure(figsize=(10, 6))
+plt.plot(demanda_range, custos_verde, label='Custo Total', color='green')
+plt.axvline(demanda_verde_otima, color='red', linestyle='--', label=f'Demanda ótima: {demanda_verde_otima} kW')
+plt.xlabel('Demanda Contratada (kW)')
+plt.ylabel('Custo Anual (R$)')
+plt.title('Tarifa Verde - Custo vs Demanda Contratada')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("otimizacao_tarifa_verde.png")
+plt.close()
+
+# Geração de grade de valores
+x = np.linspace(20, 60, 20)  # Demanda ponta
+y = np.linspace(20, 60, 20)  # Demanda fora de ponta
+X, Y = np.meshgrid(x, y)
+Z = np.array([
+    [calcular_custo_tarifa_azul([dp, dfp], media_imp=True) for dp in x]
+    for dfp in y
+])
+
+# Gráfico 3D
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(Y, X, Z, cmap='viridis', edgecolor='k')
+ax.set_ylabel('Demanda Ponta (kW)')
+ax.set_xlabel('Demanda Fora Ponta (kW)')
+ax.set_zlabel('Custo Anual (R$)')
+ax.set_title('Tarifa Azul - Custo vs Demandas')
+plt.tight_layout()
+plt.savefig("otimizacao_tarifa_azul_3d.png")
+plt.close()
+
+plt.figure(figsize=(10, 6))
+cp = plt.contourf(X, Y, Z, cmap='plasma', levels=30)
+plt.colorbar(cp, label='Custo Anual (R$)')
+plt.xlabel('Demanda Ponta (kW)')
+plt.ylabel('Demanda Fora Ponta (kW)')
+plt.title('Tarifa Azul - Custo Anual (Contorno)')
+
+# Ponto ótimo
+plt.plot(demanda_p_otima, demanda_fp_otima, 'ro', label='Ótimo')
+
+# Texto com coordenadas (em branco)
+plt.text(demanda_p_otima + 0.5, demanda_fp_otima + 0.5,
+         f'({demanda_p_otima}, {demanda_fp_otima})',
+         color='white', fontsize=10, weight='bold')
+
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("otimizacao_tarifa_azul_contorno.png")
 plt.close()
 
 # Tabela final
