@@ -87,6 +87,7 @@ class LinhaResumo(BaseModel):
     proposto: str
 
 class DadosRelatorio(BaseModel):
+    mostrar_bt: Optional[bool] = False
     Unidade: str
     Autores: str
     data: str
@@ -94,6 +95,9 @@ class DadosRelatorio(BaseModel):
     distribuidora: str
     instalacao: str
     TipoContrato: str
+    NivelTensao: str
+    tensao: str
+    tensaoUnid: str
     grupoAtual: str
     subGrupoAtual: str
     subGrupoNovo: str

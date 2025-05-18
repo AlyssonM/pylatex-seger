@@ -118,7 +118,7 @@ O presente relatório apresenta os dados de fornecimento e consumo de energia el
 
 \chapter{DADOS DA UNIDADE CONSUMIDORA}
 
-A unidade consumidora analisada é a {{ Unidade }}, localizada na {{ Endereco }}. Possui ramal de entrada em {{ NivelTensao }} tensão, de {{ tensao }} {{ tensaoUnid }}, na área de concessão da distribuidora {{ distribuidora }} cadastrada com o número de instalação {{ instalacao }}.
+A unidade consumidora analisada é a {{ Unidade }}, localizada na {{ Endereco }}. Possui ramal de entrada em {{ NivelTensao }}, de {{ tensao }} {{ tensaoUnid }}, na área de concessão da distribuidora {{ distribuidora }} cadastrada com o número de instalação {{ instalacao }}.
 
 A edificação  é  um  cliente  {{TipoContrato}}, enquadrado no grupo {{ grupoAtual }}, subgrupo {{ subGrupoAtual }}, classe {{ classe }}. Sua modalidade tarifária atual é a {{ TarifaAtual }} e sua demanda contratada é de {{ demandaAtual }}.
 
@@ -329,7 +329,7 @@ Tabela \ref{tab:tabela2}.
 \chapter{ANÁLISE DE OTIMIZAÇÃO TARIFÁRIA}
 A primeira etapa realizada para proceder a análise de otimização tarifária é verificar quais 
 os possíveis enquadramentos tarifários a unidade consumidora pode optar devido às suas 
-características.  Após  essa  análise,  verificou-se  que  a  edificação  pode  adotar  a  {{ TarifaAtual }}, Azul do Subgrupo A4 e ainda BT optante –  B3. As tarifas de aplicação para 
+características.  Após  essa  análise,  verificou-se quais modalidades tarifárias a  edificação  pode  adotar, entre elas a Verde ou Azul do subgrupo {{ subGrupoAtual }} e BT optante (se elegível). As tarifas de aplicação para 
 cada enquadramento tarifário supracitado são as previamente apresentadas na Tabela \ref{tab:tabela2}.
 
 Desta forma  foram realizados os procedimentos de otimização de contrat ação de demanda 
@@ -351,16 +351,36 @@ premissas adotadas.
     \renewcommand{\arraystretch}{1.3}
     \rowcolors{2}{white}{lightblue}
     \resizebox{1.0\textwidth}{!}{
-    \begin{tabular}{|c|c|c|c|}
+
+    % \begin{tabular}{|c|c|c|c|}
+    % \hline
+    % \textbf{DATA} & \cellcolor{green!30}\textbf{A4 Verde Otimizada (R\$)} & \cellcolor{blue!30}\textbf{A4 Azul Otimizada (R\$)} & \cellcolor{red!20}\textbf{BT Optante -- B3 (R\$)} \\
+    % \hline
+    \begin{tabular}{|c|c|c{% if mostrar_bt %}|c{% endif %}|}
     \hline
-    \textbf{DATA} & \cellcolor{green!30}\textbf{A4 Verde Otimizada (R\$)} & \cellcolor{blue!30}\textbf{A4 Azul Otimizada (R\$)} & \cellcolor{red!20}\textbf{BT Optante -- B3 (R\$)} \\
+    \textbf{DATA} & 
+    \cellcolor{green!30}\textbf{A4 Verde Otimizada (R\$)} & 
+    \cellcolor{blue!30}\textbf{A4 Azul Otimizada (R\$)} 
+    {% if mostrar_bt %}& \cellcolor{red!20}\textbf{BT Optante -- B3 (R\$)} {% endif %} \\
     \hline
+        
+    % {% for linha in tabela_12meses_otimizados %}
+    % {% if "TOTAL" in linha.data %}
+    % \rowcolor{lightgray}
+    % \textbf{ {{ linha.data }} } & \textbf{R\$ {{ linha.verde }} } & \textbf{R\$ {{ linha.azul }} } & \textbf{R\$ {{ linha.bt }} } \\
+    % {% else %}
+    % \textbf{ {{ linha.data }} } & R\$ {{ linha.verde }} & R\$ {{ linha.azul }} & R\$ {{ linha.bt }} \\
+    % {% endif %}
+    % \hline
+    % {% endfor %}
     {% for linha in tabela_12meses_otimizados %}
     {% if "TOTAL" in linha.data %}
     \rowcolor{lightgray}
-    \textbf{ {{ linha.data }} } & \textbf{R\$ {{ linha.verde }} } & \textbf{R\$ {{ linha.azul }} } & \textbf{R\$ {{ linha.bt }} } \\
+    \textbf{ {{ linha.data }} } & \textbf{R\$ {{ linha.verde }} } & \textbf{R\$ {{ linha.azul }} } 
+    {% if mostrar_bt %}& \textbf{R\$ {{ linha.bt }} }{% endif %} \\
     {% else %}
-    \textbf{ {{ linha.data }} } & R\$ {{ linha.verde }} & R\$ {{ linha.azul }} & R\$ {{ linha.bt }} \\
+    \textbf{ {{ linha.data }} } & R\$ {{ linha.verde }} & R\$ {{ linha.azul }}
+    {% if mostrar_bt %}& R\$ {{ linha.bt }}{% endif %} \\
     {% endif %}
     \hline
     {% endfor %}

@@ -10,3 +10,20 @@ services:
       - ./templates:/app/templates
     env_file:
       - .env
+
+  seger_ws:
+    build:
+      context: ./seger-ws
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    # Adicione limites de memória e CPU se necessário
+    # mem_limit: 512m
+    # cpus: 0.5
+    restart: always
+    # Adicione volumes se necessário para persistência de dados ou logs
+    volumes:
+      - ./seger-ws/src:/app/src
+      - ./seger-ws/faturas_edp:/app/faturas_edp
+    env_file:
+      - .env # Se o seger-ws também usa variáveis de ambiente
