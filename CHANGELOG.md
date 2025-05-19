@@ -23,6 +23,8 @@
   - Cálculo de otimização de demanda contratada.
 
 ### 🛠 Melhorias Realizadas
+- Atualização dos templates Jinja2 para aprimorar a geração de relatórios.
+- Ajustes nos arquivos LaTeX para otimizar a renderização e formatação.
 - Refatoração do código de renderização LaTeX para evitar conflitos com caracteres especiais.
 - Otimização do tempo de geração do relatório.
 - Logging detalhado com níveis ajustáveis para depuração (DEBUG, INFO, ERROR).
