@@ -19,6 +19,9 @@
 \usepackage{indentfirst}
 \renewcommand{\familydefault}{\sfdefault}
 
+\setlength{\headheight}{100pt}
+\setlength{\headsep}{90pt}
+
 \definecolor{turquoise}{HTML}{00BFB3}
 \definecolor{lightblue}{HTML}{D9EEF4}
 \definecolor{white}{RGB}{255, 255, 255}
@@ -38,54 +41,54 @@
 \renewcommand{\arraystretch}{1.3}
 \newtcolorbox{templatebox}[1][] {colback=turquoise, colframe=turquoise, fontupper=\color{white}\bfseries, boxrule=0mm, arc=0mm, boxsep=4pt, left=2pt, right=2pt, top=2pt, bottom=2pt, width=3cm, halign=center}
 \renewcommand{\footnotelayout}{\color{footnotecolor}\small\sffamily}
-\geometry{a4paper, margin=1in}
-\fancypagestyle{standard}{
+\geometry{a4paper, top=4.0cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+\fancypagestyle{development}{
     \fancyhf{}
-    \fancyfoot[C]{\begin{minipage}[t]{\textwidth} 
-    %\raisebox{-0.7\height}{\includegraphics[height=1cm]{GoldStandardLogoFooter.jpg}} 
-    %\hspace{0.5cm} \raisebox{-0.5\height}{\textit{Climate Security and Sustainable Development}} 
-    \end{minipage}}
+    \fancyhead[C]{
+        \vspace{4.5cm}
+        \includegraphics[width=\textwidth]{/app/templates/LOGOS/header_stripe.png} 
+        \begin{picture}(0,0)
+            \put(-6.6cm,-2cm){\includegraphics[width=0.3\textwidth]{/app/templates/LOGOS/Header2.png}} 
+        \end{picture}
+    }
     \fancyfoot[R]{\thepage}
     \renewcommand{\headrulewidth}{0pt}
 }
-\pagestyle{standard}
-\fancypagestyle{titlepage}{
-    \fancyhf{}
-    % \fancyfoot[C]{\begin{minipage}[t]{\textwidth} 
-    % \raisebox{-0.7\height}{\includegraphics[height=1cm]{GoldStandardLogoFooter.jpg}} 
-    % \hspace{0.5cm} \raisebox{-0.5\height}{\textit{Climate Security and Sustainable Development}} \end{minipage}}
-    % \renewcommand{\headrulewidth}{0pt}
-}
+
 \begin{document}
 \cleardoublepage
-%\begin{titlepage}
-\thispagestyle{empty}
-\vspace*{0pt}
+
+    \thispagestyle{empty}
+    \vspace*{-2.5cm}
     \begin{center}
-        \includegraphics[width=0.15\textwidth,trim={0.0cm 0.0cm 0.0cm 0.0cm},clip]{templates/LOGOS/IFESlogo.jpg} 
-        \hspace{2.0cm}
-        \includegraphics[width=0.25\textwidth,trim={0.0cm 0.5cm 0.0cm 0.0cm},clip]{templates/LOGOS/marca_ufes2_0} 
-        \hspace{2.0cm}
-        \includegraphics[width=0.20\textwidth,trim={0.0cm 0.0cm 0.0cm 0.0cm},clip]{templates/LOGOS/Brasao_Governo_1024.png}
+        \includegraphics[width=\textwidth,trim={4.0cm 0.0cm 4.0cm 0.0cm},clip]{/app/templates/LOGOS/header.png}
+        \vspace{1cm}
     
+        \noindent
+
+        \Large{Análise Tarifária de Unidades Consumidoras do Governo do Estado do Espírito Santo:}
+
+        \vspace{2.0cm}
     
-    \vspace{1cm}
-    \noindent
-    \Large{Análise Tarifária de Unidades Consumidoras com Tarifa Binômia de Energia Elétrica do Governo do Estado do Espírito Santo:}
+        \large{RELATÓRIO DE OTMIZAÇÃO TARIFÁRIA}
 
-    \vspace{0.25cm}
-    \small{Desenvolvimento de uma Ferramenta Customizada para Acompanhamento dos Contratos e Estudos de Caso}
+        \vspace{1.0cm}
 
-    \vspace{2.0cm}
-    \large{RELATÓRIO DE OTIMIZAÇÃO TARIFÁRIA}
+        \textbf{ {{ instalacao }} }
 
-    \textbf{ {{ Unidade }} }
+        \vspace{1.0cm}
 
-    \vspace{0.15cm}
+        \textbf{ {{ Unidade }} }
+
+        \vspace{1.5cm}
+        
+        \textbf{Equipe Técnica}
+
+        \small{ {{ Autores }} }
+    \end{center}  
     
-    \small{ {{ Autores }} }
-\end{center}  
-    \vspace{3cm}
+    \vspace{2cm}
 
     \arrayrulecolor{lightgray} 
     \noindent
@@ -111,10 +114,12 @@
     \end{table} 
     \vfill
     
-    \newpage
+
+\clearpage
+\pagestyle{development}
 
 \chapter{ESCOPO}
-O presente relatório apresenta os dados de fornecimento e consumo de energia elétrica da unidade consumidora, obtidos através de suas contas de energia elétrica, além da proposição de otimização tarifária da unidade consumidora e potenciais benefícios financeiros obtidos com a adoção da medida proposta.
+O presente relatório apresenta os dados de fornecimento e de consumo de energia elétrica da unidade consumidora Secretaria de Gestão e Recursos Humanos (SEGER), obtidos através de suas contas de energia elétrica, além da proposição de otimização tarifária da unidade consumidora e potenciais benefícios financeiros obtidos com a adoção da medida proposta.
 
 \chapter{DADOS DA UNIDADE CONSUMIDORA}
 
@@ -126,9 +131,10 @@ A edificação  é  um  cliente  {{TipoContrato}}, enquadrado no grupo {{ grupoA
 Foram  encaminhadas  {{ numContas }}  contas  de  energia  elétrica  consecutivas  da  {{ Unidade }}, 
 entre  {{ baseDadosInic }} e {{ baseDadosFinal }}. Após análise dos dados de consumo, optou-se em realizar 
 o  estudo  de  otimização  tarifária  com  base  no  intervalo  entre  {{ dadosAnaliseInic }}  e
-{{ dadosAnaliseFinal }}.  Além  disso,  a  utilização  de  um  ano  completo  preserva  as  características 
+{{ dadosAnaliseFinal }}, por esse período ser o mais atual e manter a tendência histórica de demanda medida da unidade.   
+Além  disso,  a  utilização  de  um  ano  completo  preserva  as  características 
 sazonais do perfil de consumo, como pode ser observado na Figura \ref{fig:grafico1}. A Tabela \ref{tab:tabela1} mostra 
-os dados mensais de consumo da {{ Unidade }} no período indicado.
+os dados mensais de consumo da {{ Unidade }} no período utilizado para realizar a análise de otimização tarifária.
 
 
 \begin{figure}[!ht]
@@ -195,20 +201,23 @@ os dados mensais de consumo da {{ Unidade }} no período indicado.
         \fonte{Contas de energia elétrica da edificação.}
     \end{figure}
 
-Como pode ser visto na Figura \ref{fig:grafico2}, existe ultrapassagem da demanda contratada dentro dos 
-meses analisados, pois a demanda máxima medida foi superior em alguns meses  do que a demanda contratada
-({{ demandaAtual }}), sendo assim um indicativo que seja viável aumentar  o valor de  demanda  contratada
-e,  consequentemente,  obter  uma  economia  monetária  com  a adoção desta medida. 
+Como pode ser visto na Figura \protect\ref{fig:grafico2}, {% if ultrapassagem_ocorre %} 
+existe ultrapassagem da demanda contratada dentro dos meses analisados, pois a demanda máxima medida foi superior em alguns meses do que a demanda contratada
+({{ demandaAtual }}), sendo assim um indicativo que seja viável aumentar o valor de demanda contratada
+e, consequentemente, obter uma economia monetária com a adoção desta medida.
+{% else %}
+não existe ultrapassagem da demanda contratada em todos os meses analisados, pois a demanda máxima medida se manteve em patamares abaixo da demanda contratada ({{ demandaAtual }}), sendo viável reduzir o valor de demanda contratada e, consequentemente, obter uma economia monetária com a adoção desta medida.
+{% endif %} 
 
 \chapter{DEMAIS PREMISSAS ADOTADAS}
 Além considerar na análise tarifária os últimos 12 meses de consumo como base de dados, 
 foram adotadas outras premissas para realizar a análise tarifária:
 
 \begin{itemize}
-    \item As  tarifas  de  aplicação  adotadas  nesta  análise  tarifária  são  provenientes  da RESOLUÇÃO HOMOLOGATÓRIA  Nº 3.091, DE 2 DE AGOSTO DE 2022, homologada pela ANEEL (Agência Nacional de Energia Elétrica), ou seja, foram considerados os valores atuais aplicados pela concessionária local;
-    \item Como as alíquotas do PIS e COFINS variam mensalmente e não possuem um valor definido  para os  próximos  anos, para  realizar as  análises  foi  considerado um  valor  fixo mensal de alíquota  para esses tributos, cujos valores são definidos com base na média aritmética dos tributos incidentes nos meses adotados (junho/2022 a maio/2023);
-    \item A alíquota do ICMS considerada na análise é a mesma registrada nos 12 meses dascontas de energia do cliente (junho/2022 a maio/2023).
-    \item Os  valores  e  os  meses  que  incidem  as  bandeiras  tarifárias  serão  os  mesmos registrados nos 12 meses na conta de energia do cliente (junho/2022 a maio/2023)
+    \item As  tarifas  de  aplicação  adotadas  nesta  análise  tarifária  são  provenientes  da RESOLUÇÃO HOMOLOGATÓRIA  Nº 3.370, DE 6 DE AGOSTO DE 2024, homologada pela ANEEL (Agência Nacional de Energia Elétrica), ou seja, foram considerados os valores atuais aplicados pela concessionária local;
+    \item Como as alíquotas do PIS e COFINS variam mensalmente e não possuem um valor definido  para os  próximos  anos, para  realizar as  análises  foi  considerado um  valor  fixo mensal de alíquota  para esses tributos, cujos valores são definidos com base na média aritmética dos tributos incidentes nos meses adotados ({{ baseDadosInic }} a {{ baseDadosFinal }});
+    \item A alíquota do ICMS considerada na análise é a mesma registrada nos 12 meses dascontas de energia do cliente ({{ baseDadosInic }} a {{ baseDadosFinal }}).
+    \item Os  valores  e  os  meses  que  incidem  as  bandeiras  tarifárias  serão  os  mesmos registrados nos 12 meses na conta de energia do cliente ({{ baseDadosInic }} a {{ baseDadosFinal }})
 \end{itemize}
 
 A Tabela \ref{tab:tabela2} apresenta as tarifas aplicadas nesta análise tarifária bem como os valores de 
@@ -321,24 +330,33 @@ REALIZADO”) e os valores atualizados considerando as premissas adotadas (denom
 }
 \fonte{Elaborado pelo autor}
 \end{table} 
-Após a consideração das premissas, houve  um aumento  do custo anual nas contas  de 
-energia de R\$ {{ ajuste_acrescimo }}, uma variação percentual de aproximadamente {{ ajuste_percentual }} \%. O acréscimo
+Após a consideração das premissas, houve  {% if atualizado_aumento %} 
+um aumento  do custo anual nas contas  de energia de R\$ {{ ajuste_acrescimo }}, uma variação percentual de aproximadamente {{ ajuste_percentual }} \%. O acréscimo
 deve-se ao fato do reajuste das tarifas de aplicação da {{ distribuidora }}, conforme mostrado na 
 Tabela \ref{tab:tabela2}. 
+{% else %}
+uma redução  do custo anual nas contas  de energia de R\$ {{ ajuste_acrescimo }} representando uma variação percentual de aproximadamente {{ ajuste_percentual }} \%. A reduçao 
+deve-se ao fato da variação das tarifas de aplicação da {{ distribuidora }} ou utilização do imposto médio anual como premissa de análise, conforme mostrado na Tabela \ref{tab:tabela2}. 
+{% endif %}
 
 \chapter{ANÁLISE DE OTIMIZAÇÃO TARIFÁRIA}
 A primeira etapa realizada para proceder a análise de otimização tarifária é verificar quais 
 os possíveis enquadramentos tarifários a unidade consumidora pode optar devido às suas 
-características.  Após  essa  análise,  verificou-se quais modalidades tarifárias a  edificação  pode  adotar, entre elas a Verde ou Azul do subgrupo {{ subGrupoAtual }} e BT optante (se elegível). As tarifas de aplicação para 
-cada enquadramento tarifário supracitado são as previamente apresentadas na Tabela \ref{tab:tabela2}.
+características.  Após  essa  análise,  verificou-se quais modalidades tarifárias a  edificação  pode  adotar, entre elas a Verde ou Azul do subgrupo {{ subGrupoAtual }} e BT optante (se elegível).
 
-Desta forma  foram realizados os procedimentos de otimização de contrat ação de demanda 
+Desta forma  foram realizados os procedimentos de otimização de contratação de demanda 
 das  Tarifas  Horárias  considerando  o  perfil  de  consumo  da  unidade  entre  no  período 
 {{ dadosAnaliseInic }}  a  {{ dadosAnaliseFinal }}. Para a {{ TarifaAtual }}, utilizada atualmente, foi verificado 
-que é necessário  o aumento  da demanda contratada de  {{ demandaAtual }} para  {{ demandaNova }}. Já na {{ TarifaAnalise }},  as  demandas  contratadas  de  “Ponta”  e  de  “Fora  Ponta”  devem  ser, 
+que é necessário {%if demanda_aumento %}
+o aumento  da demanda contratada de  {{ demandaAtual }} para  {{ demandaNova }}. Já na {{ TarifaAnalise }},  as  demandas  contratadas  de  “Ponta”  e  de  “Fora  Ponta”  devem  ser, 
 respectivamente,  {{ TarifaAnalisePonta }} e  {{ TarifaAnaliseForaPonta }}.  As tarifas de aplicação para cada enquadramento tarifário 
 supracitado são as previamente apresentadas na Tabela \ref{tab:tabela2}.
-
+{% else %}
+a redução da demanda contratada de  {{ demandaAtual }} para  {{ demandaNova }}. Já na {{ TarifaAnalise }},  as  demandas  contratadas  de  “Ponta”  e  de  “Fora  Ponta”  devem  ser, 
+respectivamente,  {{ TarifaAnalisePonta }} e  {{ TarifaAnaliseForaPonta }}.  As tarifas de aplicação para cada enquadramento tarifário 
+supracitado são as previamente apresentadas na Tabela \ref{tab:tabela2}.
+{% endif %}
+Já na Tarifa Horária Azul, as demandas contratadas de ``Ponta'' e de``Fora Ponta'' devem ser, respectivamente, {{ DemandaAzulPonta }} kW e {{ DemandaAzulForaPonta}} kW.
 A  Tabela  \ref{tab:tabela4}  mostra  os  custos  mensais  e  totais  no  período  de  12  meses  para  cada 
 modalidade  já  com  a  otimização  de  demanda  (quando  couber)  realizada  conforme  as 
 premissas adotadas.

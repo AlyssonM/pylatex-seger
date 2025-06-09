@@ -88,6 +88,8 @@ class LinhaResumo(BaseModel):
 
 class DadosRelatorio(BaseModel):
     mostrar_bt: Optional[bool] = False
+    ultrapassagem_ocorre: Optional[bool] = False
+    atualizado_aumento: Optional[bool] = True
     Unidade: str
     Autores: str
     data: str
@@ -109,6 +111,8 @@ class DadosRelatorio(BaseModel):
     TarifaAnaliseForaPonta: str
     demandaAtual: str
     demandaNova: str
+    DemandaAzulPonta: str
+    DemandaAzulForaPonta: str
     numContas: str
     baseDadosInic: str
     baseDadosFinal: str
